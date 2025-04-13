@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KsiazkaTelefonicznaWojtas.MVVM.Views.ContactAddingView">
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <Label Text="Create Contact" HeightRequest="100" WidthRequest="200"/>
+            <Entry Placeholder="xxx"/>
+            <Border Stroke="Black" StrokeThickness="1" HeightRequest="100" WidthRequest="400" Padding="10">
+                <VerticalStackLayout >
+                    <Label Text="Number"/>
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                    <HorizontalStackLayout.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="VerticalOptions" Value="Center"/>
+                            <Setter Property="FontSize" Value="25"/>
+                        </Style>
+                        <Style TargetType="Entry">
+                            <Setter Property="VerticalOptions" Value="Center"/>
+                            <Setter Property="FontSize" Value="25"/>
+                            <Setter Property="Keyboard" Value="Telephone"/>
+                        </Style>
+                    </HorizontalStackLayout.Resources>
+                    
+                    <Label Text="+"/>
+                    <Entry x:Name="AreaCodeEntry" Placeholder="XX" MaxLength="2" FontSize="25" WidthRequest="40" Margin="0,0,10,0" TextChanged="AutoJump_TextChanged"/>
+                    <Entry x:Name="NumberEntry1" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged"/>
+                    <Label Text="-"/>
+                    <Entry x:Name="NumberEntry2" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged"/>
+                    <Label Text="-"/>
+                    <Entry x:Name="NumberEntry3" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+            <Button Clicked="Submit"/>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

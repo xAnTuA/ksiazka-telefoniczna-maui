@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KsiazkaTelefonicznaWojtas.MVVM.Views.MainView">
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="*" RowDefinitions="Auto,*" Margin="5">
+                <FlexLayout Grid.Column="0" Grid.Row="0">
+                    <SearchBar 
+                                Placeholder="Search contacts..."
+                                TextChanged="OnSearchBArTextChanged"/>
+                    <Label Text="+" FontSize="20" FontAttributes="Bold" BackgroundColor="LightGray" HeightRequest="50" WidthRequest="50"/>
+                </FlexLayout>
+            <CollectionView x:Name = "ContactsPanel" Grid.Column="0" Grid.Row="1" 
+                            ItemsSource="{Binding Contacts}"
+                            Margin="5">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border HeightRequest="50" BackgroundColor="LightGray" Margin="0,5, 0, 0" Stroke="Gray" StrokeThickness="3" StrokeShape="RoundRectangle 5,5,5,5">
+                            <AbsoluteLayout>
+                                <Image/>
+                                <Label Text="{Binding .Name}" 
+                                       AbsoluteLayout.LayoutBounds="0.4,0.5,AutoSize,AutoSize" 
+                                       AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                       FontAttributes="Bold"/>
+                                <Label Text="{Binding .DisplayNumber}" 
+                                       AbsoluteLayout.LayoutBounds="0.9,0.5,AutoSize,AutoSize" 
+                                       AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                       />
+                            </AbsoluteLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactClickedCommand}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <AbsoluteLayout  Grid.Column="0" Grid.Row="1" 
+                             HorizontalOptions="FillAndExpand" 
+                             VerticalOptions="FillAndExpand">
+                <Button Text="Call" 
+                        BackgroundColor="Gray"
+                        HeightRequest="60" 
+                        WidthRequest="60"
+                        AbsoluteLayout.LayoutBounds="0.95,0.9,AutoSize,AutoSize"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        Clicked="ChangeToCallView"/>
+            </AbsoluteLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
