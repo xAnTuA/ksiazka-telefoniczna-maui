@@ -42,7 +42,7 @@ public class SQLite
         string query = "SELECT * FROM Contacts";
         if (!string.IsNullOrWhiteSpace(search))
         {
-            query += " WHERE LOWER(Name) LIKE @search";
+            query += " WHERE (LOWER(Name) || LOWER(Number)) LIKE @search";
         }
         using (var command = new SqliteCommand(query, Connection))
         {

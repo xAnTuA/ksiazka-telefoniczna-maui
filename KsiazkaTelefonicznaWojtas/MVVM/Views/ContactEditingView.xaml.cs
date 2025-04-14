@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace KsiazkaTelefonicznaWojtas.MVVM.Views;
 
-public partial class ContactView : ContentPage
+public partial class ContactEditingView : ContentPage
 {
-    public ContactView()
+    public ContactEditingView()
     {
         InitializeComponent();
     }

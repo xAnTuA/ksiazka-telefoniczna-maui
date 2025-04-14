@@ -16,30 +16,40 @@
                             Margin="5">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border HeightRequest="50" BackgroundColor="LightGray" Margin="0,5, 0, 0" Stroke="Gray" StrokeThickness="3" StrokeShape="RoundRectangle 5,5,5,5">
-                            <AbsoluteLayout>
-                                <Image/>
-                                <Label Text="{Binding .Name}" 
-                                       AbsoluteLayout.LayoutBounds="0.4,0.5,AutoSize,AutoSize" 
-                                       AbsoluteLayout.LayoutFlags="PositionProportional" 
-                                       FontAttributes="Bold"/>
-                                <Label Text="{Binding .DisplayNumber}" 
-                                       AbsoluteLayout.LayoutBounds="0.9,0.5,AutoSize,AutoSize" 
-                                       AbsoluteLayout.LayoutFlags="PositionProportional" 
-                                       />
-                            </AbsoluteLayout>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactClickedCommand}"/>
-                            </Border.GestureRecognizers>
-                        </Border>
+                        <VerticalStackLayout>
+                            <Border HeightRequest="50" BackgroundColor="LightGray" Margin="0,5, 0, 0" Stroke="Gray" StrokeThickness="3" StrokeShape="RoundRectangle 5,5,5,5">
+                                <AbsoluteLayout>
+                                    <Image/>
+                                    <Label Text="{Binding .Name}" 
+                                           AbsoluteLayout.LayoutBounds="0.4,0.5,AutoSize,AutoSize" 
+                                           AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                           FontAttributes="Bold"/>
+                                    <Label Text="{Binding .DisplayNumber}" 
+                                           AbsoluteLayout.LayoutBounds="0.9,0.5,AutoSize,AutoSize" 
+                                           AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                           />
+                                </AbsoluteLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactClickedCommand}" CommandParameter="{Binding}"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+                                <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Horizontal" Spacing="10" Padding="10,0,0,10">
+                                    <Button Text="✏️ Edit" />
+                                    <Button Text="❌ Delete" />
+                                </StackLayout>
+                        </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <AbsoluteLayout  Grid.Column="0" Grid.Row="1" 
                              HorizontalOptions="FillAndExpand" 
                              VerticalOptions="FillAndExpand">
-                <Button Text="Call" 
+                <Button Text="+" 
                         BackgroundColor="Gray"
+                        FontSize="25"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        FontAttributes="Bold"
                         HeightRequest="60" 
                         WidthRequest="60"
                         AbsoluteLayout.LayoutBounds="0.95,0.9,AutoSize,AutoSize"

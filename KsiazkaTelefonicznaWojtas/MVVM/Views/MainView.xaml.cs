@@ -16,6 +16,7 @@ public partial class MainView : ContentPage, INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged(string propertyName) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
     public ICommand ContactClickedCommand { get; set; }
     public ObservableCollection<_Contact> Contacts { get; set; } = new ObservableCollection<_Contact>();
     private SQLite Database { get; set; }
@@ -31,7 +32,7 @@ public partial class MainView : ContentPage, INotifyPropertyChanged
             Contacts.Add(contact);
         }
         InitializeComponent();
-        ContactClickedCommand = new Command(ContactClicked);
+        ContactClickedCommand = new Command<object>(ContactClicked);
         BindingContext = this;
     }
     public async void ChangeToContactView()
@@ -65,8 +66,15 @@ public partial class MainView : ContentPage, INotifyPropertyChanged
         }
         catch (TaskCanceledException){ }
     }
-    public async void ContactClicked()
+    public async void ContactClicked(object parameter)
     {
-        await Navigation.PushAsync(new ContactView());
+        if (parameter is _Contact clickedContact)
+        {
+            foreach (var contact in Contacts)
+            {
+                contact.IsExpanded = (contact == clickedContact) ? !contact.IsExpanded : false;
+            }
+        }
+        // await Navigation.PushAsync(new ContactView());
     }
 }
