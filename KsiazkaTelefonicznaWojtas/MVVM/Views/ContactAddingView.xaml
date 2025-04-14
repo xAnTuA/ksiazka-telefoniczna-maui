@@ -4,12 +4,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KsiazkaTelefonicznaWojtas.MVVM.Views.ContactAddingView">
     <ContentPage.Content>
-        <VerticalStackLayout>
-            <Label Text="Create Contact" HeightRequest="100" WidthRequest="200"/>
-            <Entry Placeholder="xxx"/>
-            <Border Stroke="Black" StrokeThickness="1" HeightRequest="100" WidthRequest="400" Padding="10">
-                <VerticalStackLayout >
-                    <Label Text="Number"/>
+        <Grid ColumnDefinitions="*" RowDefinitions="*">
+            <Label Text="Create Contact" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" FontSize="25"/>
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start"> 
+            
+                <VerticalStackLayout HeightRequest="150" WidthRequest="400" Padding="50" VerticalOptions="Start" Margin="0,0,10,0">
+                    <Label Text=""/>
+                    <VerticalStackLayout HorizontalOptions="Center">
+                    <Entry Placeholder="Firstname (Xxx..)" WidthRequest="350"
+                           MaxLength="50" PlaceholderColor="Black" Unfocused="StringUnfocused">
+                        <Entry.Keyboard>
+                            <Keyboard x:FactoryMethod="Create">
+                                <x:Arguments>
+                                    <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+                                </x:Arguments>
+                            </Keyboard>
+                        </Entry.Keyboard>
+                    </Entry>
+                    <Entry Placeholder="Lastname (Xxx..)" WidthRequest="350"
+                           MaxLength="50" PlaceholderColor="Black" Unfocused="StringUnfocused">
+                        <Entry.Keyboard>
+                            <Keyboard x:FactoryMethod="Create">
+                                <x:Arguments>
+                                    <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+                                </x:Arguments>
+                            </Keyboard>
+                        </Entry.Keyboard>
+                    </Entry>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            
+                <VerticalStackLayout HeightRequest="100" WidthRequest="400" Padding="10" Margin="0,10,0,0" VerticalOptions="Center">
+                    <Label Text="Number" FontAttributes="Bold" HorizontalOptions="Center" HeightRequest="20"/>
                     <HorizontalStackLayout HorizontalOptions="Center">
                     <HorizontalStackLayout.Resources>
                         <Style TargetType="Label">
@@ -24,16 +50,29 @@
                     </HorizontalStackLayout.Resources>
                     
                     <Label Text="+"/>
-                    <Entry x:Name="AreaCodeEntry" Placeholder="XX" MaxLength="2" FontSize="25" WidthRequest="40" Margin="0,0,10,0" TextChanged="AutoJump_TextChanged"/>
-                    <Entry x:Name="NumberEntry1" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged"/>
+                    <Entry x:Name="AreaCodeEntry" Placeholder="XX" MaxLength="2" FontSize="25" WidthRequest="40" Margin="0,0,10,0" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
+                    <Entry x:Name="NumberEntry1" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
                     <Label Text="-"/>
-                    <Entry x:Name="NumberEntry2" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged"/>
+                    <Entry x:Name="NumberEntry2" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
                     <Label Text="-"/>
-                    <Entry x:Name="NumberEntry3" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged"/>
+                    <Entry x:Name="NumberEntry3" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
-            </Border>
-            <Button Clicked="Submit"/>
+            
         </VerticalStackLayout>
+        <AbsoluteLayout>
+            <Button 
+                AbsoluteLayout.LayoutBounds="0.95,0.9,AutoSize,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="DarkGreen"
+                FontSize="20"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontAttributes="Bold"
+                HeightRequest="60" 
+                WidthRequest="150"
+                Text="Confirm" Clicked="Submit"/>
+        </AbsoluteLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

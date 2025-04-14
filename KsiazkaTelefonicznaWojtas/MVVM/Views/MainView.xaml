@@ -4,23 +4,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KsiazkaTelefonicznaWojtas.MVVM.Views.MainView">
     <ContentPage.Content>
-        <Grid ColumnDefinitions="*" RowDefinitions="Auto,*" Margin="5">
-                <FlexLayout Grid.Column="0" Grid.Row="0">
-                    <SearchBar 
-                                Placeholder="Search contacts..."
-                                TextChanged="OnSearchBArTextChanged"/>
-                    <Label Text="+" FontSize="20" FontAttributes="Bold" BackgroundColor="LightGray" HeightRequest="50" WidthRequest="50"/>
-                </FlexLayout>
+        <Grid 
+            Grid.Column="0" Grid.Row="0"
+            ColumnDefinitions="*" RowDefinitions="Auto,*" Margin="5">
+            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="15">
+                <SearchBar 
+                    Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
+                    x:Name="SearchBarControl"
+                    Text=""
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="350"
+                    Placeholder="Search contacts..."
+                    TextChanged="OnSearchBArTextChanged"/>
+                <HorizontalStackLayout
+                    VerticalOptions="Center" HorizontalOptions="End"
+                    Grid.Column="0" Grid.Row="1">
+                    <Switch  IsToggled="{Binding DescendingSearch}"
+                             Toggled="OnSortDirectionChanged"/>
+                    <Label Text="Descending" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <Picker
+                    SelectedIndexChanged="OnSortByChanged"
+                    x:Name="SortByList" 
+                    Grid.Column="1" Grid.Row="1" 
+                    Title="Sort By..." 
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start"/>
+            </Grid>
             <CollectionView x:Name = "ContactsPanel" Grid.Column="0" Grid.Row="1" 
                             ItemsSource="{Binding Contacts}"
                             Margin="5">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout>
-                            <Border HeightRequest="50" BackgroundColor="LightGray" Margin="0,5, 0, 0" Stroke="Gray" StrokeThickness="3" StrokeShape="RoundRectangle 5,5,5,5">
+                            <Border 
+                                WidthRequest="350"
+                                HeightRequest="50" BackgroundColor="LightGray" Margin="0,5, 0, 0" Stroke="Gray" StrokeThickness="3" StrokeShape="RoundRectangle 5,5,5,5">
                                 <AbsoluteLayout>
-                                    <Image/>
-                                    <Label Text="{Binding .Name}" 
+                                    <Label Text="{Binding .Id}" 
+                                    AbsoluteLayout.LayoutBounds="0.2,0.5,AutoSize,AutoSize" 
+                                    AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                    FontAttributes="Bold"/>
+                                    <Label Text="{Binding .FullName}" 
                                            AbsoluteLayout.LayoutBounds="0.4,0.5,AutoSize,AutoSize" 
                                            AbsoluteLayout.LayoutFlags="PositionProportional" 
                                            FontAttributes="Bold"/>
@@ -33,10 +59,15 @@
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactClickedCommand}" CommandParameter="{Binding}"/>
                                 </Border.GestureRecognizers>
                             </Border>
-                                <StackLayout IsVisible="{Binding IsExpanded}" Orientation="Horizontal" Spacing="10" Padding="10,0,0,10">
-                                    <Button Text="✏️ Edit" />
-                                    <Button Text="❌ Delete" />
-                                </StackLayout>
+                                <HorizontalStackLayout
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding IsExpanded}" Spacing="10" Padding="10,0,0,10" BackgroundColor="Azure">
+                                    <Button Text="✏️ Edit" BackgroundColor="LightGray" TextColor="Black"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactEditClickedCommand}" CommandParameter="{Binding}"/>
+                                    <Button Text="❌ Delete" BackgroundColor="LightGray" TextColor="Black" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactDeleteClickedCommand}" CommandParameter="{Binding}"/>
+                                </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

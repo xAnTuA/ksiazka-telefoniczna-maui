@@ -2,7 +2,9 @@ namespace KsiazkaTelefonicznaWojtas.Enums;
 
 public enum OrderBy
 {
-    Name,
+    Id,
+    FirstName,
+    LastName,
     AreaCode,
     Number
 }
