@@ -11,26 +11,12 @@
                 <VerticalStackLayout HeightRequest="150" WidthRequest="400" Padding="50" VerticalOptions="Start" Margin="0,0,10,0">
                     <Label Text=""/>
                     <VerticalStackLayout HorizontalOptions="Center">
-                    <Entry Placeholder="Firstname (Xxx..)" WidthRequest="350"
-                           MaxLength="50" PlaceholderColor="Black" Unfocused="StringUnfocused">
-                        <Entry.Keyboard>
-                            <Keyboard x:FactoryMethod="Create">
-                                <x:Arguments>
-                                    <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
-                                </x:Arguments>
-                            </Keyboard>
-                        </Entry.Keyboard>
-                    </Entry>
-                    <Entry Placeholder="Lastname (Xxx..)" WidthRequest="350"
-                           MaxLength="50" PlaceholderColor="Black" Unfocused="StringUnfocused">
-                        <Entry.Keyboard>
-                            <Keyboard x:FactoryMethod="Create">
-                                <x:Arguments>
-                                    <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
-                                </x:Arguments>
-                            </Keyboard>
-                        </Entry.Keyboard>
-                    </Entry>
+                    <Entry x:Name="FirstName" Placeholder="Firstname (Xxx..)" WidthRequest="350"
+                           MaxLength="50" PlaceholderColor="Black" Unfocused="StringUnfocused"/>
+  
+                    <Entry x:Name="LastName" Placeholder="Lastname (Xxx..)" WidthRequest="350"
+                           MaxLength="50" PlaceholderColor="Black" Unfocused="StringUnfocused"/>
+                    
                     </VerticalStackLayout>
                 </VerticalStackLayout>
             
@@ -50,7 +36,7 @@
                     </HorizontalStackLayout.Resources>
                     
                     <Label Text="+"/>
-                    <Entry x:Name="AreaCodeEntry" Placeholder="XX" MaxLength="2" FontSize="25" WidthRequest="40" Margin="0,0,10,0" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
+                    <Entry x:Name="AreaCodeEntry" Placeholder="XXXX" MaxLength="4" FontSize="25" WidthRequest="75" Margin="0,0,10,0" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused" Completed="AreaCodeEntry_OnCompleted"/>
                     <Entry x:Name="NumberEntry1" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
                     <Label Text="-"/>
                     <Entry x:Name="NumberEntry2" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>

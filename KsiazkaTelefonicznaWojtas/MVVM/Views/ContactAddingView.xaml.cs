@@ -16,12 +16,45 @@ public partial class ContactAddingView : ContentPage
         InitializeComponent();
     }
 
-    public void Submit(Object sender, EventArgs e)
+    public async void Submit(Object sender, EventArgs e)
     {
+        Regex rx = new Regex("^[A-Z,ŻŹĆĄĘŁÓŚ,a-z,ćążźśęół]+$");
+        if (!rx.IsMatch(FirstName.Text ?? ""))
+        {
+            await DisplayAlert("Warning", $"Firstname doesnt pass standards, try again", "Ok");
+            return;
+        }
+
+        if (!rx.IsMatch(LastName.Text ?? ""))
+        {
+            await DisplayAlert("Warning", $"Lastname doesnt pass standards, try again", "Ok");
+            return;
+        }
         
-        // int number = System.Convert.ToInt32(NumberEntry1.Text+NumberEntry2.Text+NumberEntry3.Text);
-        _Contact x = new _Contact("Antoni","Wojtas", 1, 123231123); 
+        Regex areacoderx = new Regex(@"^\d{0,4}$");
+        if (!areacoderx.IsMatch(AreaCodeEntry.Text ?? ""))
+        {
+            await DisplayAlert("Warning", $"Area Code doesnt pass standards, try again", "Ok");
+            return;
+        }
+        
+        string numberstring = NumberEntry1.Text + NumberEntry2.Text + NumberEntry3.Text;
+        Regex numberrx = new Regex("^[0-9]{9}$");
+        if (!numberrx.IsMatch(numberstring ?? ""))
+        {
+            await DisplayAlert("Warning", $"Number doesnt pass standards, try again", "Ok");
+            return;
+        }
+        string firstname = (FirstName.Text??"").ToLower();
+        string formattedFirstName = char.ToUpper(firstname[0]) + firstname.Substring(1);
+        string lastname = (LastName.Text??"").ToLower();
+        string formattedLastName = char.ToUpper(lastname[0]) + lastname.Substring(1);
+        int number = System.Convert.ToInt32(numberstring);
+        short areacode = System.Convert.ToInt16(AreaCodeEntry.Text);
+        _Contact x = new _Contact(formattedFirstName,formattedLastName, areacode, number); 
         SQLite.GetInstance().AddContacts(x);
+        await Navigation.PopAsync();
+        
     }
     
     private void AutoJump_TextChanged(object sender, TextChangedEventArgs e)
@@ -48,8 +81,8 @@ public partial class ContactAddingView : ContentPage
     {
         if(sender is Entry entry)
         {
-            Regex rx = new Regex("^[A-Z,ŻŹĆĄĘŁÓŚ,a-z,ążźś]+$");
-            if (!rx.IsMatch(entry.Text))
+            Regex rx = new Regex("^[A-Z,ŻŹĆĄĘŁÓŚ,a-z,ćążźśęół]+$");
+            if (!rx.IsMatch(entry.Text??""))
             {
                 entry.TextColor = Color.FromRgb(255,0,0);
             }
@@ -78,5 +111,10 @@ public partial class ContactAddingView : ContentPage
                 entry.TextColor = Color.FromRgb(0, 255, 0);
             }
         }
+    }
+
+    private void AreaCodeEntry_OnCompleted(object? sender, EventArgs e)
+    {
+        NumberEntry1.Focus();
     }
 }

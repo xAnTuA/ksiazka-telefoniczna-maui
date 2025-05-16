@@ -4,6 +4,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KsiazkaTelefonicznaWojtas.MVVM.Views.ContactEditingView">
     <ContentPage.Content>
-        
+        <Grid ColumnDefinitions="*" RowDefinitions="*">
+            <Label Text="Create Contact" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" FontSize="25"/>
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start"> 
+            
+                <VerticalStackLayout HeightRequest="150" WidthRequest="400" Padding="50" VerticalOptions="Start" Margin="0,0,10,0">
+                    <Label Text=""/>
+                    <VerticalStackLayout HorizontalOptions="Center">
+                    <Entry x:Name="FirstName" Placeholder="Firstname (Xxx..)" WidthRequest="350"
+                           MaxLength="50" PlaceholderColor="Black" Unfocused="StringUnfocused"/>
+  
+                    <Entry x:Name="LastName" Placeholder="Lastname (Xxx..)" WidthRequest="350"
+                           MaxLength="50" PlaceholderColor="Black" Unfocused="StringUnfocused"/>
+                    
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            
+                <VerticalStackLayout HeightRequest="100" WidthRequest="400" Padding="10" Margin="0,10,0,0" VerticalOptions="Center">
+                    <Label Text="Number" FontAttributes="Bold" HorizontalOptions="Center" HeightRequest="20"/>
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                    <HorizontalStackLayout.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="VerticalOptions" Value="Center"/>
+                            <Setter Property="FontSize" Value="25"/>
+                        </Style>
+                        <Style TargetType="Entry">
+                            <Setter Property="VerticalOptions" Value="Center"/>
+                            <Setter Property="FontSize" Value="25"/>
+                            <Setter Property="Keyboard" Value="Telephone"/>
+                        </Style>
+                    </HorizontalStackLayout.Resources>
+                    
+                    <Label Text="+"/>
+                    <Entry x:Name="AreaCodeEntry" Placeholder="XXXX" MaxLength="4" FontSize="25" WidthRequest="75" Margin="0,0,10,0" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused" Completed="AreaCodeEntry_OnCompleted"/>
+                    <Entry x:Name="NumberEntry1" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
+                    <Label Text="-"/>
+                    <Entry x:Name="NumberEntry2" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
+                    <Label Text="-"/>
+                    <Entry x:Name="NumberEntry3" Placeholder="XXX" MaxLength="3" TextChanged="AutoJump_TextChanged" Unfocused="NumberUnfocused"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            
+        </VerticalStackLayout>
+        <AbsoluteLayout>
+            <Button 
+                AbsoluteLayout.LayoutBounds="0.95,0.9,AutoSize,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="DarkGreen"
+                FontSize="20"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontAttributes="Bold"
+                HeightRequest="60" 
+                WidthRequest="150"
+                Text="Confirm" Clicked="Submit"/>
+        </AbsoluteLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

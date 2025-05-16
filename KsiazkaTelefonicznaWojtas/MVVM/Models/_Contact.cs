@@ -7,7 +7,7 @@ public class _Contact : INotifyPropertyChanged
     public int? Id { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public short AreaCode { get; set; }
+    public short? AreaCode { get; set; }
     public int Number { get; set; }
     public string DisplayNumber => $"+{AreaCode} {FormatNumber(System.Convert.ToString(Number))}";
     public string FullName => $"{FirstName} {LastName}";

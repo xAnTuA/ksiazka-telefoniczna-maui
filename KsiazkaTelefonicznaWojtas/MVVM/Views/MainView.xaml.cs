@@ -30,7 +30,7 @@ public partial class MainView : ContentPage, INotifyPropertyChanged
  
     
     private CancellationTokenSource? _cts;
-    private readonly TimeSpan _debounceDelay = TimeSpan.FromMilliseconds(100);
+    private readonly TimeSpan _debounceDelay = TimeSpan.FromMilliseconds(200);
     public MainView()
     {
         Database = SQLite.GetInstance();
@@ -138,5 +138,11 @@ public partial class MainView : ContentPage, INotifyPropertyChanged
         {
             Contacts.Add(contact);
         }
+
+    }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        RefreshList();
     }
 }
