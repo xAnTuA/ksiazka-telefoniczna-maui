@@ -1,0 +1,19 @@
+name: Build MAUI App
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install MAUI Workload
+        run: dotnet workload install maui
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet build YourMauiProject.csproj -c Release
