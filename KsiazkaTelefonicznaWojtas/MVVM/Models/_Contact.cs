@@ -11,7 +11,9 @@ public class _Contact : INotifyPropertyChanged
     public int Number { get; set; }
     public string DisplayNumber => $"+{AreaCode} {FormatNumber(System.Convert.ToString(Number))}";
     public string FullName => $"{FirstName} {LastName}";
-    
+
+    public bool IsMarkedForMultiDelete { get; set; } = false;
+
     private bool _isExpanded;
     public bool IsExpanded
     {

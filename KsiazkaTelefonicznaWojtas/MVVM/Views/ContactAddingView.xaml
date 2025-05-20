@@ -59,6 +59,7 @@
                 WidthRequest="150"
                 Text="Confirm" Clicked="Submit"/>
         </AbsoluteLayout>
+            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

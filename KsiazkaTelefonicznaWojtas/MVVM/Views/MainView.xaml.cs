@@ -27,8 +27,12 @@ public partial class MainView : ContentPage, INotifyPropertyChanged
     private SQLite Database { get; set; }
     
     public bool DescendingSearch { get; set; } = false;
- 
+
+    public bool MultiDeleteActive { get; set; } = false;
+    public bool MultiDeleteActiveNegated => !MultiDeleteActive;
     
+    public List<_Contact> MultideleteSelectedIds { get; set; } = new List<_Contact>();
+
     private CancellationTokenSource? _cts;
     private readonly TimeSpan _debounceDelay = TimeSpan.FromMilliseconds(200);
     public MainView()
@@ -144,5 +148,44 @@ public partial class MainView : ContentPage, INotifyPropertyChanged
     {
         base.OnAppearing();
         RefreshList();
+    }
+
+    private void MultiDelete(object sender, EventArgs e)
+    {
+        MultiDeleteActive = !MultiDeleteActive;
+        OnPropertyChanged(nameof(MultiDeleteActive));
+        OnPropertyChanged(nameof(MultiDeleteActiveNegated));
+    }
+
+    private async void DeleteSelected(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Warning", $"Do you want to delete {MultideleteSelectedIds.Count} contacts?", "Yes", "Cancel");
+        if (answer)
+        {
+            foreach (_Contact contact in MultideleteSelectedIds)
+            {
+                Database.DeleteContact(contact);
+            }
+            MultideleteSelectedIds.Clear();
+            RefreshList();
+        }
+        MultiDeleteActive = false;
+        OnPropertyChanged(nameof(MultiDeleteActive));
+        OnPropertyChanged(nameof(MultiDeleteActiveNegated));
+    }
+
+    private void MultideleteItemChanged(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender is CheckBox checkbox && checkbox.BindingContext is _Contact contact)
+        {
+            if (e.Value)
+            {
+                if (!MultideleteSelectedIds.Contains(contact))  { MultideleteSelectedIds.Add(contact); }
+            }
+            else
+            {
+                if (MultideleteSelectedIds.Contains(contact)) { MultideleteSelectedIds.Remove(contact); }
+            }
+        }
     }
 }

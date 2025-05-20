@@ -3,11 +3,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KsiazkaTelefonicznaWojtas.MVVM.Views.MainView">
+    <ContentPage.MenuBarItems>
+                <MenuBarItem Text="File">
+                    <MenuFlyoutItem Text="Exit"/>
+                </MenuBarItem>
+                <MenuBarItem Text="Locations">
+                    <MenuFlyoutSubItem Text="Change Location">
+                        <MenuFlyoutItem Text="Redmond, USA"/>
+                        <MenuFlyoutItem Text="London, UK" />
+                        <MenuFlyoutItem Text="Berlin, DE"/>
+                    </MenuFlyoutSubItem>
+                    <MenuFlyoutSeparator />            
+                    <MenuFlyoutItem Text="Add Location"/>
+                    <MenuFlyoutItem Text="Edit Location"/>
+                    <MenuFlyoutItem Text="Remove Location"/>                            
+                </MenuBarItem>
+                <MenuBarItem Text="View">
+                    <MenuFlyoutItem Text="Refresh"
+                                    />
+                    <MenuFlyoutItem Text="Change Theme"
+                                    />
+                </MenuBarItem>
+            </ContentPage.MenuBarItems>
     <ContentPage.Content>
         <Grid 
             Grid.Column="0" Grid.Row="0"
             ColumnDefinitions="*" RowDefinitions="Auto,*" Margin="5">
-            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="15">
+            
+            <AbsoluteLayout  Grid.Column="0" Grid.Row="0" 
+                             HorizontalOptions="FillAndExpand" 
+                             VerticalOptions="FillAndExpand">
+                <Button Text="⚙" 
+                        BackgroundColor="Gray"
+                        FontSize="18"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        FontAttributes="Bold"
+                        HeightRequest="30" 
+                        WidthRequest="30"
+                        AbsoluteLayout.LayoutBounds="0,0,AutoSize,AutoSize"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        Clicked="MultiDelete"/>
+            </AbsoluteLayout>
+            
+            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="15" HeightRequest="100">
                 <SearchBar 
                     Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
                     x:Name="SearchBarControl"
@@ -51,7 +90,7 @@
                                 </SwipeView.RightItems>
                                 <Border 
                                     WidthRequest="350"
-                                    HeightRequest="50" BackgroundColor="LightGray" Margin="0,5, 0, 0"
+                                    HeightRequest="50" BackgroundColor="LightGray" Margin="0,2.5, 0, 2.5"
                                     Stroke="Gray" StrokeThickness="3" StrokeShape="RoundRectangle 5,5,5,5">
                                     <FlyoutBase.ContextFlyout>
                                         <MenuFlyout>
@@ -59,20 +98,28 @@
                                                             Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
                                                             Path=BindingContext.ContactEditClickedCommand}" 
                                                             CommandParameter="{Binding}"/>
-                                            <MenuFlyoutItem Text="Delete"/>
+                                            <MenuFlyoutItem Text="Delete"
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
+                                                            Path=BindingContext.ContactDeleteClickedCommand}" 
+                                                            CommandParameter="{Binding}"/>
                                         </MenuFlyout>
                                     </FlyoutBase.ContextFlyout>
                                     <AbsoluteLayout>
+                                        <CheckBox AbsoluteLayout.LayoutBounds="0,0.5,AutoSize,AutoSize" 
+                                                  AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                                  CheckedChanged="MultideleteItemChanged"
+                                                  IsChecked="{Binding .IsMarkedForMultiDelete}"
+                                                  IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.MultiDeleteActive}"/>
                                         <Label Text="{Binding .Id}" 
-                                        AbsoluteLayout.LayoutBounds="0.2,0.5,AutoSize,AutoSize" 
-                                        AbsoluteLayout.LayoutFlags="PositionProportional" 
-                                        FontAttributes="Bold"/>
+                                               AbsoluteLayout.LayoutBounds="0.1,0.5,AutoSize,AutoSize" 
+                                               AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                               FontAttributes="Bold"/>
                                         <Label Text="{Binding .FullName}" 
-                                               AbsoluteLayout.LayoutBounds="0.4,0.5,AutoSize,AutoSize" 
+                                               AbsoluteLayout.LayoutBounds="0.3,0.5,AutoSize,AutoSize" 
                                                AbsoluteLayout.LayoutFlags="PositionProportional" 
                                                FontAttributes="Bold"/>
                                         <Label Text="{Binding .DisplayNumber}" 
-                                               AbsoluteLayout.LayoutBounds="0.9,0.5,AutoSize,AutoSize" 
+                                               AbsoluteLayout.LayoutBounds="0.9,0.5,AutoSize,AutoSize"
                                                AbsoluteLayout.LayoutFlags="PositionProportional" 
                                                />
                                     </AbsoluteLayout>
@@ -95,7 +142,24 @@
                         WidthRequest="60"
                         AbsoluteLayout.LayoutBounds="0.95,0.9,AutoSize,AutoSize"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
-                        Clicked="ChangeToCallView"/>
+                        Clicked="ChangeToCallView"
+                        IsVisible="{Binding MultiDeleteActiveNegated}"/>
+            </AbsoluteLayout>
+            <AbsoluteLayout  Grid.Column="0" Grid.Row="1" 
+                             HorizontalOptions="FillAndExpand" 
+                             VerticalOptions="FillAndExpand">
+                <Button Text="Delete Selected" 
+                        BackgroundColor="DarkRed"
+                        FontSize="25"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        FontAttributes="Bold"
+                        HeightRequest="60" 
+                        WidthRequest="240"
+                        AbsoluteLayout.LayoutBounds="0.95,0.9,AutoSize,AutoSize"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        Clicked="DeleteSelected"
+                        IsVisible="{Binding MultiDeleteActive}"/>
             </AbsoluteLayout>
         </Grid>
     </ContentPage.Content>
